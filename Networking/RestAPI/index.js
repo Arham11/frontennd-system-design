@@ -11,7 +11,7 @@ app.all("/", (req, res) => {
   res.send(`I am up`);
 });
 
-const todos = [
+let todos = [
   {
     id: 1,
     title: "task 1",
@@ -21,6 +21,11 @@ const todos = [
     id: 2,
     title: "task 2",
     status: true,
+  },
+  {
+    id: 3,
+    title: "task 3",
+    status: false,
   },
 ];
 
@@ -37,8 +42,31 @@ app.post("/todos", (req, res) => {
 });
 
 // update
+app.put("/todos/:id", (req, res) => {
+  const newTodoData = req.body;
+  const todoParamId = Number(req.params.id);
+
+  let todoIndex = todos.findIndex((td) => td.id === todoParamId);
+
+  if (todoIndex !== -1) {
+    todos[todoIndex] = {
+      id: todoParamId,
+      ...newTodoData,
+    };
+  }
+  res.json({ message: "todo updated successfully!!!" });
+});
 
 // delete
+app.delete("/todos/:id", (req, res) => {
+  const todoParamId = Number(req.params.id);
+  let todoIndex = todos.findIndex((td) => td.id === todoParamId);
+  if (todoIndex !== -1) {
+    todos.splice(todoIndex, 1);
+  }
+
+  res.json({ message: "deleted successfully", itemDeleted: todoIndex });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is Running at Port ${PORT}`);
