@@ -38,7 +38,7 @@ app.get("/todos", (req, res) => {
 app.post("/todos", (req, res) => {
   const newTodo = req.body;
   todos.push(newTodo);
-  res.json({ message: "new todo added successfully!" });
+  res.status(201).json({ message: "new todo added successfully!" });
 });
 
 // update
@@ -54,7 +54,7 @@ app.put("/todos/:id", (req, res) => {
       ...newTodoData,
     };
   }
-  res.json({ message: "todo updated successfully!!!" });
+  res.status(201).json({ message: "todo updated successfully!!!" });
 });
 
 // delete
@@ -63,9 +63,11 @@ app.delete("/todos/:id", (req, res) => {
   let todoIndex = todos.findIndex((td) => td.id === todoParamId);
   if (todoIndex !== -1) {
     todos.splice(todoIndex, 1);
+  } else {
+    res.status(404).json({ message: "ID not found" });
   }
 
-  res.json({ message: "deleted successfully", itemDeleted: todoIndex });
+  res.status(204).json({ message: "Deleted successfully" });
 });
 
 app.listen(PORT, () => {
