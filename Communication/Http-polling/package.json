@@ -1,0 +1,17 @@
+{
+  "name": "http-polling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "shortPolling.js",
+  "scripts": {
+    "start-sp": "nodemon ./shortPolling.js",
+    "start-lp": "nodemon ./longPolling.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11"
+  }
+}
