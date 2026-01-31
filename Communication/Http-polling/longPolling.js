@@ -11,10 +11,10 @@ let data = "Initial Data";
 const waitingClientList = [];
 
 app.get("/getData", (req, res) => {
-  if (data !== req.query.lastData) {
-    res.json({ data });
-  } else {
+  if (data === req.query.lastData) {
     waitingClientList.push(res);
+  } else {
+    res.json({ data });
   }
 });
 
