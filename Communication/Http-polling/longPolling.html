@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -15,7 +15,7 @@
           debugger;
 
           const response = await fetch(
-            `http://localhost:5111/getData?lastData=${lastData}`
+            `http://localhost:5111/getData?lastData=${lastData}`,
           );
           const result = await response.json();
           document.getElementById("data-container").innerHTML = result.data;
