@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="veiwport" content="width=device-width, initial-scal=1.0" />
+    <title>Long Polling</title>
+  </head>
+  <body>
+    <h1>Long Polling</h1>
+    <div id="data-container"></div>
+
+    <script>
+      async function getData(lastData) {
+        try {
+          debugger;
+
+          const response = await fetch(
+            `http://localhost:5111/getData?lastData=${lastData}`,
+          );
+          const result = await response.json();
+          document.getElementById("data-container").innerHTML = result.data;
+          getData(result.data); // the reason the function is going in infinite loop is becasue
+          // the response variable is still in the pending state (you can see it in network call)
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      getData();
+    </script>
+  </body>
+</html>
