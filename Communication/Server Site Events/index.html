@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Server Site Event</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  </head>
+  <body>
+    <div>
+      <h1 id="serverSiteEvent"></h1>
+    </div>
+    <script>
+      const eventSource = new EventSource("/sse");
+      const element = document.getElementById("serverSiteEvent");
+      eventSource.onmessage = function (event) {
+        console.log(event); // <-- this is the actual SSE message
+        element.innerText += event.data + "\n";
+      };
+    </script>
+  </body>
+</html>
