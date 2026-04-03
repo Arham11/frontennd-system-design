@@ -20,7 +20,15 @@ app.get("/getData", (req, res) => {
 
 // this update can happen from server or database or another user on messaging app
 app.get("/updateData", (req, res) => {
-  data = req.query.data;
+  const nextData = req.query.data;
+
+  if (typeof nextData !== "string" || nextData.trim() === "") {
+    return res.status(400).json({
+      error: "Query parameter 'data' is required and cannot be empty",
+    });
+  }
+
+  data = nextData.trim();
   while (waitingClientList.length > 0) {
     const client = waitingClientList.pop();
     client.json({ data });
