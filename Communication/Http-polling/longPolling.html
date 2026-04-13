@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="veiwport" content="width=device-width, initial-scal=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Long Polling</title>
   </head>
   <body>
@@ -12,8 +12,6 @@
     <script>
       async function getData(lastData) {
         try {
-          debugger;
-
           const response = await fetch(
             `http://localhost:5111/getData?lastData=${lastData}`,
           );
