@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local Storage</title>
+  </head>
+  <style>
+    body.dark {
+      color: #fff;
+      background-color: #000;
+    }
+    body.light {
+      color: #000;
+      background-color: #fff;
+    }
+  </style>
+  <body class="">
+    <h1>Website to Demonstrate light and dark mode from Local storage</h1>
+    <button id="toggleBtn">Toogle</button>
+  </body>
+
+  <script>
+    const toggleBtn = document.getElementById("toggleBtn");
+
+    toggleBtn.addEventListener("click", function () {
+      const body = document.body;
+      const currentMode = localStorage.getItem("mode") ? "dark" : "light";
+      let newMode = currentMode === "dark" ? "light" : "dark";
+
+      body.classList.remove(currentMode);
+      body.classList.add(newMode);
+      localStorage.setItem("mode", newMode);
+    });
+
+    function checkMode() {
+      const body = document.body;
+      const saveMode = localStorage.getItem("mode") || "light";
+      body.classList.add(saveMode);
+    }
+
+    checkMode();
+  </script>
+</html>
