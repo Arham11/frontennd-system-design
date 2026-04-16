@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Session Storage</title>
+  </head>
+  <body>
+    <h1>Notes Tracker</h1>
+    <form id="notesForm">
+      <input placeholder="Add you Notes here" name="noteName" required />
+      <input type="submit" />
+    </form>
+
+    <div id="notesList"></div>
+  </body>
+
+  <script>
+    function notes() {
+      let result = [];
+      const notesList = document.getElementById("notesList");
+      const notesForm = document.getElementById("notesForm");
+
+      notesForm.addEventListener("submit", addNodeThroughForm);
+      notesList.addEventListener("click", removeNote);
+
+      function addNodeThroughSession() {
+        result = JSON.parse(sessionStorage.getItem("notes")) || [];
+        result.forEach((noteValue) => addNote(noteValue));
+      }
+      addNodeThroughSession();
+
+      function addNodeThroughForm(e) {
+        e.preventDefault();
+        const noteForm = document.forms.notesForm;
+        let noteValue = noteForm.elements.noteName.value;
+        noteValue =
+          noteValue[0].toUpperCase() + noteValue.slice(1, noteValue.length);
+        addNote(noteValue);
+        result.push(noteValue);
+        globalThis.sessionStorage.setItem("notes", JSON.stringify(result));
+        e.target.reset();
+      }
+
+      function addNote(noteValue) {
+        const noteContainer = document.createElement("div");
+        const noteItem = document.createElement("span");
+        const noteDelete = document.createElement("button");
+
+        noteItem.classList.add("notes-item");
+        noteDelete.innerText = "remove";
+        noteDelete.classList.add("remove-note");
+
+        noteContainer.appendChild(noteItem);
+        noteContainer.appendChild(noteDelete);
+
+        noteItem.style.display = "inline-block";
+        noteItem.style.paddingRight = "20px";
+
+        noteItem.innerText = noteValue;
+
+        notesList.insertAdjacentElement("afterbegin", noteContainer);
+      }
+
+      function removeNote(e) {
+        if (e.target.classList.contains("remove-note")) {
+          e.target.parentElement.remove();
+        } else {
+          return;
+        }
+
+        const noteValue =
+          e.target.parentNode.querySelector(".notes-item").innerText;
+
+        result = result.filter(
+          (item) => item.toUpperCase() !== noteValue.toUpperCase(),
+        );
+        sessionStorage.setItem("notes", JSON.stringify(result));
+      }
+    }
+
+    notes();
+  </script>
+</html>
