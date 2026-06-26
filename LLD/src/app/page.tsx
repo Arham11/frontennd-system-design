@@ -14,6 +14,9 @@ export default function Home() {
         <div className="pb-3">
           <Link href={"/inifinite-scroll"}>Inifinite scroll UI</Link>
         </div>
+        <div className="pb-3">
+          <Link href={"/accordian"}>Accordian UI</Link>
+        </div>
       </div>
     </div>
   );
