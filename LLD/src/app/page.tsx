@@ -17,6 +17,9 @@ export default function Home() {
         <div className="pb-3">
           <Link href={"/accordian"}>Accordian UI</Link>
         </div>
+        <div className="pb-3">
+          <Link href={"/reddit-comment"}>Reddit comment UI</Link>
+        </div>
       </div>
     </div>
   );
